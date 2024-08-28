@@ -24,7 +24,7 @@ const config = {
         primaryText: '#FFFFFF',
         secondaryText: '#A9A9A9',
         sidebar: '#252525',
-        accent: '#4CAF50',
+        accent: '#7F5E37',
       },
       borderRadius: {
         lg: 'var(--radius)',
