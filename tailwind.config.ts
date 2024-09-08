@@ -21,6 +21,7 @@ const config = {
       colors: {
         background: '#1E1E1E',
         secondaryBackground: '#2C2C2C',
+        tertiaryBackground: '#787878',
         primaryText: '#FFFFFF',
         secondaryText: '#A9A9A9',
         sidebar: '#252525',

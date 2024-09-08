@@ -27,7 +27,7 @@ export default async function ChatLayout({ children }: { children: ReactNode }) 
           <div className="col-span-1">
             <Sidebar />
           </div>
-          <div className="col-span-5">{children}</div>
+          <main className="col-span-5">{children}</main>
         </div>
       </>
     )
