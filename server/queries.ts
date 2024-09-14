@@ -1,3 +1,5 @@
+'use server';
+
 import { db } from './db/db';
 import { ChatsTable, UserTable } from './db/schema';
 
@@ -30,6 +32,7 @@ export async function sendUserChats(
       timeStamp: ChatsTable.timeStamp,
       chatTitle: ChatsTable.chatTitle,
       chatHistory: ChatsTable.chatHistory,
+      id: ChatsTable.id,
     });
 
   return response;
@@ -44,6 +47,7 @@ export async function getUserDetails(userId: string) {
           timeStamp: true,
           chatTitle: true,
           chatHistory: true,
+          id: true,
         },
       },
     },

@@ -1,4 +1,4 @@
-import { relations } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 import { jsonb, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 
 export const UserTable = pgTable('users', {
@@ -8,7 +8,9 @@ export const UserTable = pgTable('users', {
 
 export const ChatsTable = pgTable('chats', {
   id: uuid('id').primaryKey().defaultRandom(),
-  timeStamp: timestamp('timeStamp', { mode: 'date' }).defaultNow().notNull(),
+  timeStamp: timestamp('timeStamp')
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
   chatTitle: varchar('chatTitle', { length: 255 }).notNull(),
   chatHistory: jsonb('chatHistory')
     .$type<{ messageSender: 'user' | 'llm'; chatMessage: string; timeStamp: Date }>()

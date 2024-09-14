@@ -1,0 +1,1 @@
+ALTER TABLE "chats" ALTER COLUMN "timeStamp" SET DEFAULT extract(epoch from now());

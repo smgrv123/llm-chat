@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { SendHorizonal } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { useRef, useState } from 'react';
 
 const chatJson: { messageSender: 'user' | 'llm'; chatMessage: string }[] = [
@@ -87,9 +87,9 @@ export default function Home() {
             setchats((prevState) => [...prevState, { messageSender: 'user', chatMessage: prompt }]);
             setprompt('');
           }}
-          className="p-2 rounded-full bg-accent text-white"
+          className="p-1 rounded-full bg-accent text-white"
         >
-          <SendHorizonal size={20} />
+          <ChevronRight color="#1E1E1E" size={25} />
         </button>
       </div>
     </section>

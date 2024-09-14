@@ -5,14 +5,15 @@ import { ReactNode } from 'react';
 import { getUserDetails } from '@/server/queries';
 import Navbar from '@/src/components/common/Navbar';
 import Sidebar from '@/src/components/common/Sidebar';
+import { OnboardingFormEnum, UserDetails } from '@/src/lib/types';
 
 export default async function ChatLayout({ children }: { children: ReactNode }) {
-  if (!cookies().get('gptKey')) {
+  if (!cookies().get(OnboardingFormEnum.GPT_KEY)) {
     redirect('/');
   }
-  const userId = cookies().get('userId');
+  const userId = cookies().get(OnboardingFormEnum.USER_ID);
 
-  let response;
+  let response: UserDetails | undefined;
   try {
     response = await getUserDetails(userId?.value!);
   } catch (error) {
@@ -25,7 +26,7 @@ export default async function ChatLayout({ children }: { children: ReactNode }) 
         <Navbar userName={response?.fullName} />
         <div className="grid grid-cols-6">
           <div className="col-span-1">
-            <Sidebar />
+            <Sidebar chats={response?.chats} />
           </div>
           <main className="col-span-5">{children}</main>
         </div>

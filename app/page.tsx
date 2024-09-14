@@ -3,24 +3,24 @@ import { redirect } from 'next/navigation';
 
 import { sendUserDetails } from '@/server/queries';
 import OnboardingForm from '@/src/components/home/OnboardingForm';
-import { revalidatePath } from 'next/cache';
+import { OnboardingFormEnum } from '@/src/lib/types';
 
 export default function Home() {
-  if (cookies().get('gptKey')) {
+  if (cookies().get(OnboardingFormEnum.GPT_KEY)) {
     redirect('/home');
   }
 
   const createMessage = async (formData: FormData) => {
     'use server';
-    const userName = formData.get('userName') as string;
-    const llmKey = formData.get('gptKey') as string;
+    const userName = formData.get(OnboardingFormEnum.USER_NAME) as string;
+    const llmKey = formData.get(OnboardingFormEnum.GPT_KEY) as string;
 
     const { set } = cookies();
     try {
       const response = await sendUserDetails(userName);
-      set('gptKey', llmKey);
-      set('userId', response[0].id);
-      revalidatePath('/');
+      set(OnboardingFormEnum.GPT_KEY, llmKey);
+      set(OnboardingFormEnum.USER_ID, response[0].id);
+      redirect('/home');
     } catch (error) {
       console.error('Error in setting user details', error);
     }

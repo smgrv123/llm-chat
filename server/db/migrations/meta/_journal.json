@@ -8,6 +8,20 @@
       "when": 1725106285084,
       "tag": "0000_early_forge",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1726152128226,
+      "tag": "0001_serious_spyke",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1726153435833,
+      "tag": "0002_wild_logan",
+      "breakpoints": true
     }
   ]
 }
