@@ -1,6 +1,6 @@
 'use client';
 
-import { OnboardingFormType } from '@/src/lib/types';
+import { OnboardingFormEnum, OnboardingFormType } from '@/src/lib/types';
 
 function OnboardingForm({ createMessage }: { createMessage: (formData: FormData) => void }) {
   const formFields: OnboardingFormType[] = [
@@ -8,13 +8,13 @@ function OnboardingForm({ createMessage }: { createMessage: (formData: FormData)
       fieldName: 'Name',
       inputPlaceholder: 'Enter Your Name...',
       inputType: 'text',
-      inputName: 'userName',
+      inputName: OnboardingFormEnum.USER_NAME,
     },
     {
       fieldName: 'Open AI Key',
       inputPlaceholder: 'Enter The Key...',
       inputType: 'text',
-      inputName: 'gptKey',
+      inputName: OnboardingFormEnum.GPT_KEY,
     },
   ];
 

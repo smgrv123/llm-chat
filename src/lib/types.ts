@@ -8,9 +8,10 @@ export type OnboardingFormType = {
 };
 
 export type UserChatDetails = {
-  timeStamp: Date;
+  createdAt: Date;
+  updatedAt: Date;
   chatTitle: string;
-  chatHistory: unknown[] | null;
+  chatHistory: UserChatHistory[];
   id: string;
 };
 
@@ -20,8 +21,19 @@ export type UserDetails = {
   chats: UserChatDetails[];
 };
 
+export type UserChatHistory = {
+  messageSender: UserTypeEnum.LLM | UserTypeEnum.USER;
+  chatMessage: string;
+  timeStamp: Date;
+};
+
 export enum OnboardingFormEnum {
   USER_NAME = 'userName',
   GPT_KEY = 'gptKey',
   USER_ID = 'userId',
+}
+
+export enum UserTypeEnum {
+  USER = 'user',
+  LLM = 'llm',
 }

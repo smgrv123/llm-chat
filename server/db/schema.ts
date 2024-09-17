@@ -1,3 +1,4 @@
+import { UserChatHistory } from '@/src/lib/types';
 import { relations, sql } from 'drizzle-orm';
 import { jsonb, pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 
@@ -8,13 +9,14 @@ export const UserTable = pgTable('users', {
 
 export const ChatsTable = pgTable('chats', {
   id: uuid('id').primaryKey().defaultRandom(),
-  timeStamp: timestamp('timeStamp')
+  createdAt: timestamp('createdAt')
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp('updatedAt')
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
   chatTitle: varchar('chatTitle', { length: 255 }).notNull(),
-  chatHistory: jsonb('chatHistory')
-    .$type<{ messageSender: 'user' | 'llm'; chatMessage: string; timeStamp: Date }>()
-    .array(),
+  chatHistory: jsonb('chatHistory').$type<UserChatHistory>().array(),
   userId: uuid('userId')
     .references(() => UserTable.id)
     .notNull(),
