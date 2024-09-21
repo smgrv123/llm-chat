@@ -11,7 +11,14 @@ export default function ChatInputHolder({
   const formRef = useRef<HTMLFormElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   return (
-    <form ref={formRef} action={formChatInputHanlder} className="flex items-center p-4 border-t">
+    <form
+      ref={formRef}
+      action={(e) => {
+        formChatInputHanlder(e);
+        formRef.current?.reset();
+      }}
+      className="flex items-center p-4 border-t"
+    >
       <textarea
         ref={textAreaRef}
         placeholder="Ask your questions here...."

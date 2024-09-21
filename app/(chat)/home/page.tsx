@@ -1,10 +1,9 @@
-import dayjs from 'dayjs';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { sendUserChats } from '@/server/queries';
 import InputHolder from '@/src/components/chat/InputHolder';
-import { OnboardingFormEnum, UserTypeEnum } from '@/src/lib/types';
+import { startOpenAIConversation } from '@/src/lib/llm';
+import { OnboardingFormEnum } from '@/src/lib/types';
 
 export default function Home() {
   const handleFormAction = async (formData: FormData) => {
@@ -15,9 +14,7 @@ export default function Home() {
 
     try {
       if (userId) {
-        const response = await sendUserChats(userId, prompt, [
-          { chatMessage: prompt, messageSender: UserTypeEnum.USER, timeStamp: dayjs().toDate() },
-        ]);
+        const response = await startOpenAIConversation(userId, prompt);
         console.log('response', response);
         redirectPath = `/search/${response[0].id}`;
       } else throw Error;

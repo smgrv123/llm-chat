@@ -37,3 +37,8 @@ export enum UserTypeEnum {
   USER = 'user',
   LLM = 'llm',
 }
+
+export type Message = {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
+};
