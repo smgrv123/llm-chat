@@ -3,11 +3,7 @@
 import { ChevronRight } from 'lucide-react';
 import { useRef } from 'react';
 
-export default function InputHolder({
-  handleFormAction,
-}: {
-  handleFormAction: (formData: FormData) => Promise<void>;
-}) {
+export default function InputHolder({ handleFormAction }: { handleFormAction: (formData: FormData) => Promise<void> }) {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 

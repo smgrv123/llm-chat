@@ -8,9 +8,7 @@ import { revalidatePath } from 'next/cache';
 export default async function Home({ params }: { params: { id: string } }) {
   let chats: { id: string; chatHistory: UserChatHistory[] } | undefined = undefined;
   try {
-    chats = (await getUserChatDetails(params.id)) as
-      | { id: string; chatHistory: UserChatHistory[] }
-      | undefined;
+    chats = (await getUserChatDetails(params.id)) as { id: string; chatHistory: UserChatHistory[] } | undefined;
   } catch (error) {
     console.error('error', error);
   }
@@ -20,7 +18,7 @@ export default async function Home({ params }: { params: { id: string } }) {
     const prompt = formData.get('chatInputPrompt') as string;
     try {
       if (chats) {
-        const response = await updateUserChatDetails(
+        await updateUserChatDetails(
           chats?.id,
           [
             ...chats?.chatHistory,
@@ -42,17 +40,12 @@ export default async function Home({ params }: { params: { id: string } }) {
           {chats.chatHistory.reverse().map(({ chatMessage, messageSender }, index) => (
             <div
               key={index}
-              className={clsx(
-                'flex flex-col mb-4',
-                messageSender === 'user' ? 'items-end' : 'items-start'
-              )}
+              className={clsx('flex flex-col mb-4', messageSender === 'user' ? 'items-end' : 'items-start')}
             >
               <div
                 className={clsx(
                   'p-3 rounded-lg max-w-[70%]',
-                  messageSender === 'user'
-                    ? 'bg-tertiaryBackground text-primaryText'
-                    : 'bg-inherit text-primaryText'
+                  messageSender === 'user' ? 'bg-tertiaryBackground text-primaryText' : 'bg-inherit text-primaryText'
                 )}
               >
                 {chatMessage}

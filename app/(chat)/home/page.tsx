@@ -9,16 +9,18 @@ import { OnboardingFormEnum, UserTypeEnum } from '@/src/lib/types';
 export default function Home() {
   const handleFormAction = async (formData: FormData) => {
     'use server';
-    const userId = cookies().get(OnboardingFormEnum.USER_ID)?.value!;
+    const userId = cookies().get(OnboardingFormEnum.USER_ID)?.value;
     const prompt = formData.get('inputPrompt') as string;
     let redirectPath: string | null = null;
 
     try {
-      const response = await sendUserChats(userId, prompt, [
-        { chatMessage: prompt, messageSender: UserTypeEnum.USER, timeStamp: dayjs().toDate() },
-      ]);
-      console.log('response', response);
-      redirectPath = `/search/${response[0].id}`;
+      if (userId) {
+        const response = await sendUserChats(userId, prompt, [
+          { chatMessage: prompt, messageSender: UserTypeEnum.USER, timeStamp: dayjs().toDate() },
+        ]);
+        console.log('response', response);
+        redirectPath = `/search/${response[0].id}`;
+      } else throw Error;
     } catch (error) {
       console.error('error', error);
     } finally {

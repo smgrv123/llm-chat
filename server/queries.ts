@@ -18,11 +18,7 @@ export async function sendUserDetails(name: string) {
   return response;
 }
 
-export async function sendUserChats(
-  userId: string,
-  chatTitle: string,
-  chatHistory: UserChatHistory[]
-) {
+export async function sendUserChats(userId: string, chatTitle: string, chatHistory: UserChatHistory[]) {
   const response = await db
     .insert(ChatsTable)
     .values({
@@ -50,6 +46,7 @@ export async function getUserDetails(userId: string) {
           createdAt: true,
           updatedAt: true,
           chatTitle: true,
+          chatHistory: true,
           id: true,
         },
       },
@@ -67,11 +64,7 @@ export async function getUserChatDetails(chatId: string) {
   return response;
 }
 
-export async function updateUserChatDetails(
-  chatId: string,
-  chatHistory: UserChatHistory[],
-  updatedAt: Date
-) {
+export async function updateUserChatDetails(chatId: string, chatHistory: UserChatHistory[], updatedAt: Date) {
   const response = await db
     .update(ChatsTable)
     .set({

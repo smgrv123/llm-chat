@@ -11,11 +11,11 @@ export default async function ChatLayout({ children }: { children: ReactNode }) 
   if (!cookies().get(OnboardingFormEnum.GPT_KEY)) {
     redirect('/');
   }
-  const userId = cookies().get(OnboardingFormEnum.USER_ID);
+  const userId = cookies().get(OnboardingFormEnum.USER_ID)?.value;
 
-  let response: UserDetails | undefined;
+  let response;
   try {
-    response = await getUserDetails(userId?.value!);
+    if (userId) response = (await getUserDetails(userId)) as UserDetails | undefined;
   } catch (error) {
     console.error('error in getting userDetails', error);
   }
