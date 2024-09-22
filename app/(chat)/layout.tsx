@@ -5,6 +5,7 @@ import { ReactNode } from 'react';
 import { getUserDetails } from '@/server/queries';
 import Navbar from '@/src/components/common/Navbar';
 import Sidebar from '@/src/components/common/Sidebar';
+import Logger from '@/src/lib/Logger';
 import { OnboardingFormEnum, UserDetails } from '@/src/lib/types';
 
 export default async function ChatLayout({ children }: { children: ReactNode }) {
@@ -17,7 +18,7 @@ export default async function ChatLayout({ children }: { children: ReactNode }) 
   try {
     if (userId) response = (await getUserDetails(userId)) as UserDetails | undefined;
   } catch (error) {
-    console.error('error in getting userDetails', error);
+    Logger.error('error in getting userDetails', error);
   }
 
   return (

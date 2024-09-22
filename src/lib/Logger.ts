@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export default class Logger {
   /**
@@ -5,7 +6,7 @@ export default class Logger {
    */
   public static log(...logData: any[]) {
     // ! add env variable handling
-    if (true) console.log(logData);
+    if (process.env.NODE_ENV !== 'production') console.log(logData);
   }
 
   public static error(...errData: any) {

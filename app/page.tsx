@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 
 import { sendUserDetails } from '@/server/queries';
 import OnboardingForm from '@/src/components/home/OnboardingForm';
+import Logger from '@/src/lib/Logger';
 import { OnboardingFormEnum } from '@/src/lib/types';
 
 export default function Home() {
@@ -22,7 +23,7 @@ export default function Home() {
       set(OnboardingFormEnum.USER_ID, response[0].id);
       redirect('/home');
     } catch (error) {
-      console.error('Error in setting user details', error);
+      Logger.error('Error in setting user details', error);
     }
   };
   return (

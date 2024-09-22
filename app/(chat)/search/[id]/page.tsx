@@ -1,16 +1,42 @@
 import { getUserChatDetails } from '@/server/queries';
 import ChatInputHolder from '@/src/components/chat/ChatInputHolder';
 import { generateOpenAIResponse } from '@/src/lib/llm';
+import Logger from '@/src/lib/Logger';
 import { UserChatHistory, UserTypeEnum } from '@/src/lib/types';
 import clsx from 'clsx';
+import 'highlight.js/styles/github.css';
+import { Clipboard } from 'lucide-react';
 import { revalidatePath } from 'next/cache';
+import { ReactNode } from 'react';
+import Markdown from 'react-markdown';
+import rehypeHighlight from 'rehype-highlight';
+import rehypeSanitize from 'rehype-sanitize';
+
+interface CodeBlockWithCopyProps {
+  children: ReactNode;
+  language: string;
+}
+
+const CodeBlockWithCopy: React.FC<CodeBlockWithCopyProps> = ({ children, language }) => {
+  return (
+    <div className="relative px-2 py-4 bg-[#130215] rounded-md my-2">
+      <button className="absolute right-2 top-2 border-none">
+        <Clipboard />
+      </button>
+      {language}
+      <pre>
+        <code>{children}</code>
+      </pre>
+    </div>
+  );
+};
 
 export default async function Home({ params }: { params: { id: string } }) {
   let chats: { id: string; chatHistory: UserChatHistory[] } | undefined = undefined;
   try {
     chats = (await getUserChatDetails(params.id)) as { id: string; chatHistory: UserChatHistory[] } | undefined;
   } catch (error) {
-    console.error('error', error);
+    Logger.error('error', error);
   }
 
   const formChatInputHanlder = async (formData: FormData) => {
@@ -21,7 +47,7 @@ export default async function Home({ params }: { params: { id: string } }) {
 
       revalidatePath(`/search/${params.id}`);
     } catch (error) {
-      console.error('error', error);
+      Logger.error('error', error);
     }
   };
 
@@ -34,7 +60,20 @@ export default async function Home({ params }: { params: { id: string } }) {
               key={index}
               className={clsx('flex flex-col mb-4', messageSender === UserTypeEnum.USER ? 'items-end' : 'items-start')}
             >
-              <div
+              <Markdown
+                rehypePlugins={[rehypeSanitize, rehypeHighlight]}
+                components={{
+                  code({ className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || '');
+                    return match ? (
+                      <CodeBlockWithCopy language={match[1]}>{children}</CodeBlockWithCopy>
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
                 className={clsx(
                   'p-3 rounded-lg max-w-[70%]',
                   messageSender === UserTypeEnum.USER
@@ -43,7 +82,7 @@ export default async function Home({ params }: { params: { id: string } }) {
                 )}
               >
                 {chatMessage}
-              </div>
+              </Markdown>
             </div>
           ))}
         </div>

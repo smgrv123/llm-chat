@@ -11,6 +11,6 @@ module.exports = {
   plugins: ['@typescript-eslint', 'tailwindcss'],
   rules: {
     // Add custom rules or override existing ones here
-    // 'no-console': 'error',
+    'no-console': 'error',
   },
 };

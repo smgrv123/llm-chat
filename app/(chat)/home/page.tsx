@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 
 import InputHolder from '@/src/components/chat/InputHolder';
 import { startOpenAIConversation } from '@/src/lib/llm';
+import Logger from '@/src/lib/Logger';
 import { OnboardingFormEnum } from '@/src/lib/types';
 
 export default function Home() {
@@ -15,11 +16,10 @@ export default function Home() {
     try {
       if (userId) {
         const response = await startOpenAIConversation(userId, prompt);
-        console.log('response', response);
         redirectPath = `/search/${response[0].id}`;
       } else throw Error;
     } catch (error) {
-      console.error('error', error);
+      Logger.error('error', error);
     } finally {
       if (redirectPath) redirect(redirectPath);
     }

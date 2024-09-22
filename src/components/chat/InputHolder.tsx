@@ -12,7 +12,7 @@ export default function InputHolder({ handleFormAction }: { handleFormAction: (f
       <form
         ref={formRef}
         action={handleFormAction}
-        className="flex flex-row items-center gap-5 p-5 h-[120px] w-[550px] rounded-lg border-4 border-background"
+        className="flex flex-row items-center gap-5 p-5 h-[120px] w-[550px] rounded-lg border-4 border-background text-white"
       >
         <textarea
           ref={textAreaRef}

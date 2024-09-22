@@ -62,6 +62,7 @@ export async function startOpenAIConversation(userId: string, prompt: string) {
   const responseOpenAI = await openai.chat.completions.create({
     model: 'gpt-4o',
     messages,
+    max_tokens: 50000,
   });
 
   const assistantMessage: UserChatHistory[] = [
