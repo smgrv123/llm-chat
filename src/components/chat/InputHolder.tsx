@@ -12,17 +12,23 @@ export default function InputHolder({ handleFormAction }: { handleFormAction: (f
       <form
         ref={formRef}
         action={handleFormAction}
-        className="flex flex-row items-center gap-5 p-5 h-[120px] w-[550px] rounded-lg border-4 border-background text-white"
+        className={`flex flex-row items-center gap-5 p-5 w-[550px] h-[${70 + parseInt(textAreaRef.current?.style.height || '')}px] rounded-lg border-4 border-background text-white`}
       >
         <textarea
           ref={textAreaRef}
+          onChange={() => {
+            if (textAreaRef.current) {
+              textAreaRef.current.style.height = 'auto';
+              textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+            }
+          }}
           onKeyDown={async (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
               e.preventDefault();
               formRef.current?.requestSubmit();
             }
           }}
-          className="flex-1 bg-inherit"
+          className="flex-1 bg-inherit px-1"
           placeholder="Ask Anything...."
           name="inputPrompt"
         />

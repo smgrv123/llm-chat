@@ -62,7 +62,6 @@ export async function startOpenAIConversation(userId: string, prompt: string) {
   const responseOpenAI = await openai.chat.completions.create({
     model: 'gpt-4o',
     messages,
-    max_tokens: 50000,
   });
 
   const assistantMessage: UserChatHistory[] = [
@@ -73,7 +72,7 @@ export async function startOpenAIConversation(userId: string, prompt: string) {
     },
   ];
 
-  const response = await sendUserChats(userId, prompt, [
+  const response = await sendUserChats(userId, prompt.slice(0, 254), [
     { chatMessage: prompt, messageSender: UserTypeEnum.USER, timeStamp: dayjs().toDate() },
     ...assistantMessage,
   ]);

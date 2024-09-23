@@ -12,11 +12,11 @@ export default function Sidebar({ chats }: { chats: UserChatDetails[] }) {
   return (
     <section className="h-full px-4 text-secondaryText bg-background">
       <article>
-        {chats.reverse().map(({ updatedAt, chatTitle, id }, index) => (
+        {chats.map(({ updatedAt, chatTitle, id }, index) => (
           <div key={index} className="py-2">
             <Link href={hrefHandler(id)}>
               <div className="text-accent">{dayjs(updatedAt).format('DD/MM/YYYY hh:mm:ss')}</div>
-              <div>{chatTitle}</div>
+              <div className="line-clamp-1">{chatTitle}</div>
             </Link>
           </div>
         ))}
