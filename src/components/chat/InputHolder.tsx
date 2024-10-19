@@ -28,7 +28,7 @@ export default function InputHolder({ handleFormAction }: { handleFormAction: (f
               formRef.current?.requestSubmit();
             }
           }}
-          className="flex-1 bg-inherit px-1"
+          className="flex-1 bg-inherit px-1 max-h-96"
           placeholder="Ask Anything...."
           name="inputPrompt"
         />

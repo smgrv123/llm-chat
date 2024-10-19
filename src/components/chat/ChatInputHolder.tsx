@@ -22,12 +22,18 @@ export default function ChatInputHolder({
       <textarea
         ref={textAreaRef}
         placeholder="Ask your questions here...."
-        className="flex-1 p-2 mr-4 rounded-lg border text-wrap"
+        className="flex-1 p-2 mr-4 rounded-lg border text-wrap max-h-64"
         rows={1}
         onKeyDown={async (e) => {
           if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             formRef.current?.requestSubmit();
+          }
+        }}
+        onChange={() => {
+          if (textAreaRef.current) {
+            textAreaRef.current.style.height = 'auto';
+            textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
           }
         }}
         name="chatInputPrompt"
