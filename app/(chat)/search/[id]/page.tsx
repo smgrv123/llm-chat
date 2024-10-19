@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import 'highlight.js/styles/github.css';
 import { Clipboard } from 'lucide-react';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
 import Markdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
@@ -35,8 +36,10 @@ export default async function Home({ params }: { params: { id: string } }) {
   let chats: { id: string; chatHistory: UserChatHistory[] } | undefined = undefined;
   try {
     chats = (await getUserChatDetails(params.id)) as { id: string; chatHistory: UserChatHistory[] } | undefined;
+    if (!chats) throw new Error('No Chats Found with this ID');
   } catch (error) {
     Logger.error('error', error);
+    redirect('/home');
   }
 
   const formChatInputHanlder = async (formData: FormData) => {

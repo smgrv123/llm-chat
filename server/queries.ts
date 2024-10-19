@@ -75,3 +75,22 @@ export async function updateUserChatDetails(chatId: string, chatHistory: UserCha
 
   return response;
 }
+
+export async function updateUserDetails(userId: string, name: string) {
+  const response = await db
+    .update(UserTable)
+    .set({
+      fullName: name,
+    })
+    .where(eq(UserTable.id, userId))
+    .returning({
+      id: UserTable.id,
+      fullName: UserTable.fullName,
+    });
+
+  return response;
+}
+
+export async function deleteUserChat(chatId: string) {
+  await db.delete(ChatsTable).where(eq(ChatsTable.id, chatId));
+}

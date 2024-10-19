@@ -16,11 +16,10 @@ export default function Home() {
     const userName = formData.get(OnboardingFormEnum.USER_NAME) as string;
     const llmKey = formData.get(OnboardingFormEnum.GPT_KEY) as string;
 
-    const { set } = cookies();
     try {
       const response = await sendUserDetails(userName);
-      set(OnboardingFormEnum.GPT_KEY, llmKey);
-      set(OnboardingFormEnum.USER_ID, response[0].id);
+      cookies().set(OnboardingFormEnum.GPT_KEY, llmKey);
+      cookies().set(OnboardingFormEnum.USER_ID, response[0].id);
       redirect('/home');
     } catch (error) {
       Logger.error('Error in setting user details', error);
