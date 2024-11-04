@@ -11,7 +11,10 @@ export default function InputHolder({ handleFormAction }: { handleFormAction: (f
     <section>
       <form
         ref={formRef}
-        action={handleFormAction}
+        action={(e) => {
+          handleFormAction(e);
+          formRef.current?.reset();
+        }}
         className={`flex flex-row items-center gap-5 p-5 w-[550px] h-[${70 + parseInt(textAreaRef.current?.style.height || '')}px] rounded-lg border-4 border-background text-white`}
       >
         <textarea
