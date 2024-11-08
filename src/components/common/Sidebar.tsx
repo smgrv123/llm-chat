@@ -3,9 +3,9 @@ import SidebarButton from './SidebarButton';
 
 export default function Sidebar({ chats }: { chats: UserChatDetails[] }) {
   return (
-    <section className="h-full px-4 text-secondaryText bg-background">
+    <section className="h-[calc(100vh-64px)] px-4 text-secondaryText bg-background overflow-scroll">
       <article>
-        {chats.map(({ updatedAt, chatTitle, id }, index) => (
+        {chats.reverse().map(({ updatedAt, chatTitle, id }, index) => (
           <div key={index} className="py-2">
             <SidebarButton updatedAt={updatedAt} chatTitle={chatTitle} chatId={id} />
           </div>

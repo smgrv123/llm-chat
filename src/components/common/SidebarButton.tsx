@@ -4,6 +4,7 @@ import { deleteUserChat } from '@/server/queries';
 import Logger from '@/src/lib/Logger';
 import dayjs from 'dayjs';
 import { Trash } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function SidebarButton({
@@ -18,7 +19,7 @@ export default function SidebarButton({
   const router = useRouter();
 
   return (
-    <button className="flex items-center text-left gap-1" onClick={() => router.push(`/search/${chatId}`)}>
+    <Link prefetch={true} href={`/search/${chatId}`} className="flex items-center text-left gap-1">
       <div className="flex-1">
         <div className="text-accent">{dayjs(updatedAt).format('DD/MM/YYYY hh:mm:ss')}</div>
         <div className="line-clamp-1">{chatTitle}</div>
@@ -36,6 +37,6 @@ export default function SidebarButton({
           }
         }}
       />
-    </button>
+    </Link>
   );
 }
