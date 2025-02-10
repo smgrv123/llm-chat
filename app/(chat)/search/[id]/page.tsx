@@ -1,36 +1,16 @@
 import { getUserChatDetails } from '@/server/queries';
 import ChatInputHolder from '@/src/components/chat/ChatInputHolder';
+import CodeBlockWithCopy from '@/src/components/common/CodeBlockWithCopy';
 import { generateOpenAIResponse } from '@/src/lib/llm';
 import Logger from '@/src/lib/Logger';
 import { UserChatHistory, UserTypeEnum } from '@/src/lib/types';
 import clsx from 'clsx';
 import 'highlight.js/styles/github.css';
-import { Clipboard } from 'lucide-react';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { ReactNode } from 'react';
 import Markdown from 'react-markdown';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeSanitize from 'rehype-sanitize';
-
-interface CodeBlockWithCopyProps {
-  children: ReactNode;
-  language: string;
-}
-
-const CodeBlockWithCopy: React.FC<CodeBlockWithCopyProps> = ({ children, language }) => {
-  return (
-    <div className="relative px-2 py-4 bg-[#130215] rounded-md my-2">
-      <button className="absolute right-2 top-2 border-none">
-        <Clipboard />
-      </button>
-      {language}
-      <pre>
-        <code>{children}</code>
-      </pre>
-    </div>
-  );
-};
 
 export default async function Home({ params }: { params: { id: string } }) {
   let chats: { id: string; chatHistory: UserChatHistory[] } | undefined = undefined;

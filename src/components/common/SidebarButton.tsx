@@ -19,24 +19,32 @@ export default function SidebarButton({
   const router = useRouter();
 
   return (
-    <Link prefetch={true} href={`/search/${chatId}`} className="flex items-center text-left gap-1">
-      <div className="flex-1">
-        <div className="text-accent">{dayjs(updatedAt).format('DD/MM/YYYY hh:mm:ss')}</div>
-        <div className="line-clamp-1">{chatTitle}</div>
+    <Link
+      prefetch={true}
+      href={`/search/${chatId}`}
+      className="flex items-center w-full px-3 py-2 hover:bg-gray-100/10 rounded-lg gap-3"
+    >
+      <div className="flex-1 min-w-0">
+        <div className="text-accent text-sm">{dayjs(updatedAt).format('DD/MM/YYYY HH:mm:ss')}</div>
+        <div className="text-base overflow-hidden text-ellipsis whitespace-nowrap" title={chatTitle}>
+          {chatTitle}
+        </div>
       </div>
 
-      <Trash
-        color="#7F5E37"
-        onClick={async (e) => {
-          e.stopPropagation();
-          try {
-            deleteUserChat(chatId);
-            router.refresh();
-          } catch (error) {
-            Logger.log('error in deleting user chat', error);
-          }
-        }}
-      />
+      <div className="flex-shrink-0">
+        <Trash
+          color="#7F5E37"
+          onClick={async (e) => {
+            e.stopPropagation();
+            try {
+              deleteUserChat(chatId);
+              router.refresh();
+            } catch (error) {
+              Logger.log('error in deleting user chat', error);
+            }
+          }}
+        />
+      </div>
     </Link>
   );
 }
