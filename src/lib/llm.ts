@@ -27,7 +27,7 @@ export async function generateOpenAIResponse(conversationId: string, prompt: str
   ];
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-4o',
+    model: 'o3-mini',
     messages,
   });
 
